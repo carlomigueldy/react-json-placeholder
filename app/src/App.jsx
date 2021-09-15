@@ -1,45 +1,44 @@
-import React, { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import React, { useEffect, useState } from "react";
+import "./App.css";
+
+import axios from "axios";
+
+// email/password
+
+/**
+ * 0. ✅ Install axios (HTTP Rest Client)
+ * 1. Fetch todos from an Laravel API
+ * 2. Add todo to Laravel API
+ * 3. Update a todo (Mark as Completed or Mark as not completed)
+ * 4. Delete a todo
+ */
+
+const API_BASE_URL = "https://jsonplaceholder.typicode.com";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    getTodos();
+  }, []);
+
+  async function getTodos() {
+    const response = await axios.get(`${API_BASE_URL}/posts`);
+
+    console.log(response);
+
+    setTodos(response.data);
+  }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
-  )
+    <>
+      <center>
+        <h1>Todo App</h1>
+      </center>
+
+      <pre>{JSON.stringify(todos, null, 4)}</pre>
+    </>
+  );
 }
 
-export default App
+export default App;

@@ -51,6 +51,7 @@ class TodoController extends Controller
         $data = $todo->update([
             'title' => $request->title,
             'description' => $request->description,
+            'completed' => $request->completed,
         ]);
         
         return response()->json($data);
